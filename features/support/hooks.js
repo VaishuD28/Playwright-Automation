@@ -1,5 +1,5 @@
 const playwright = require('@playwright/test');
-const { POManager } = require('../../pageObjects/POManager');
+const  POManager  = require('../../pageObjects/POManager');
 const { Before, BeforeStep, After, AfterStep } = require('@cucumber/cucumber');
 const { Status } = require('@cucumber/cucumber');
 const path = require("path");

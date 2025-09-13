@@ -2,9 +2,9 @@ Feature: Ecommerce validation
 
     @PassedUsers
     Scenario Outline: Placing an order
-        Given Login to Ecommerce application with "<username>" and "<password>"
-        When Verify he login is passed
-        Then Add product "<productName>" to cart
+        Given I login to the Ecommerce application with "<username>" and "<password>"
+        When login should be successful
+        Then I add "<productName>" to the cart
 
         Examples:
             | username                | password     | productName              |
@@ -17,7 +17,6 @@ Feature: Ecommerce validation
 
     @FailedUsers
     Scenario Outline: Placing an order - Invalid user
-        Given Login to Ecommerce application with failed credentials "locked_out_user" and "secret_sauce"
-        Then Verify he login failed
-
+        Given I login to the Ecommerce application with  invalid credentials "locked_out_user" and "secret_sauce"
+        Then login should fail with an error message
 

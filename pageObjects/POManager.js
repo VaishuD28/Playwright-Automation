@@ -10,15 +10,29 @@ class POManager
         this.dashboardPage = new DashboardPage(this.page);
     }
 
-    getloginpage()
-    {
-        return this.loginPage;
-    }
+    // getLoginPage()
+    // {
+    //     return this.loginPage;
+    // }
 
-    getDashboardPage()
-    {
+    getLoginPage() {
+    if (!this.loginPage) {
+        this.loginPage = new LoginPage(this.page);
+    }
+    return this.loginPage;
+}
+
+    // getDashboardPage()
+    // {
+    //     return this.dashboardPage;
+    // }
+
+    getDashboardPage() {
+        if (!this.dashboardPage) {
+            this.dashboardPage = new DashboardPage(this.page);
+        }
         return this.dashboardPage;
     }
 }
 
-module.exports = {POManager};
+module.exports = POManager;

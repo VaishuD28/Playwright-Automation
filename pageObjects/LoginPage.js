@@ -5,45 +5,37 @@ class LoginPage {
         this.page = page;
         this.username = this.page.locator("#user-name");
         this.password = this.page.locator("#password");
-        this.signinbtn = this.page.locator(".submit-button");
+        this.signinbtn = this.page.locator("#login-button");
         this.welcomeText = this.page.locator(".app_logo");
-        this.errorMessage = this.page.locator("[data-test = 'error']");
+        this.errorMessage = this.page.locator("[data-test='error']");
     }
 
     async goto() {
         await this.page.goto("https://www.saucedemo.com/");
     }
 
-    async validLogin(username, password) {
+    async login(username, password) {
         await this.username.fill(username);
         await this.password.fill(password);
         await this.signinbtn.click();
     }
 
-    async VerifyLogin() {
-        const text = await this.welcomeText.textContent();
-        console.log(text);
-
+    async verifyLogin() {
+        //using assertion to verify login instead of printing on console
+        // const text = await this.welcomeText.textContent();
+        // console.log(text);
+        await expect(this.welcomeText).toHaveText("Swag Labs");
     }
 
-    async invalidLogin(username, password) {
-        await this.username.fill(username);
-        await this.password.fill(password);
-        await this.signinbtn.click();
+    async loginFailed(expectedMessage) {
 
-    }
-    async loginFailed() {
-
-            // assert first
-            await expect(this.errorMessage).toHaveText("Epic sadface: Sorry, this user has been locked out.");
-
-            // if you want the actual text value
-            const text = await this.errorMessage.textContent();
-            console.log(text);
-        }
-
+        // assert first
+        await expect(this.errorMessage).toHaveText(expectedMessage);
+        // if you want the actual text value
+        console.log(await this.errorMessage.textContent());
     }
 
+}
 
 
 module.exports = LoginPage;

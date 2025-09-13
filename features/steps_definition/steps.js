@@ -1,47 +1,47 @@
 const { Given, Then, When } = require('@cucumber/cucumber');
 const { test, expect } = require('@playwright/test');
-const { POManager } = require('../../pageObjects/POManager');
+const  POManager  = require('../../pageObjects/POManager');
 
 
-Given('Login to Ecommerce application with {string} and {string}', { timeout: 200 * 1000 },
+Given('I login to the Ecommerce application with {string} and {string}', { timeout: 200 * 1000 },
   async function (username, password) {
     // Write code here that turns the phrase above into concrete actions
-    const loginPage = this.poManager.getloginpage();
+    const loginPage = this.poManager.getLoginPage();
     await loginPage.goto();
-    await loginPage.validLogin(username, password);
+    await loginPage.login(username, password);
 
   });
 
-When('Verify he login is passed', async function () {
+When('login should be successful', async function () {
   // Write code here that turns the phrase above into concrete actions
-  const welcomeText = this.poManager.getloginpage();
-  await welcomeText.VerifyLogin();
+  const welcomeText = this.poManager.getLoginPage();
+  await welcomeText.verifyLogin();
 });
 
 
-Then('Add product {string} to cart', async function (productName) {
+Then('I add {string} to the cart', async function (productName) {
   // Write code here that turns the phrase above into concrete actions
   const dashboardPage = this.poManager.getDashboardPage();
-  await dashboardPage.displayProducts();
-  await dashboardPage.searchProduct(productName);
-  await dashboardPage.addProductToCart();
+  // await dashboardPage.displayProducts();
+  await dashboardPage.addProductToCart(productName);
+  await dashboardPage.goToCart();
 });
 
 
 ////////////////////////////Failed test ////////////////////////////////
 
-Given('Login to Ecommerce application with failed credentials {string} and {string}',{ timeout: 200 * 1000 },
+Given('I login to the Ecommerce application with invalid credentials {string} and {string}',{ timeout: 200 * 1000 },
    async function (username, password) {
   // Write code here that turns the phrase above into concrete actions
-  const failedUser = this.poManager.getloginpage();
-  await failedUser.goto();
-  await failedUser.invalidLogin(username, password);
+   const loginPage = this.poManager.getLoginPage();
+    await loginPage.goto();
+    await loginPage.login(username, password);
 });
 
 
-Then('Verify he login failed',{ timeout: 200 * 1000 }, async function () {
+Then('login should fail with an error message',{ timeout: 200 * 1000 }, async function () {
   // Write code here that turns the phrase above into concrete actions
   const errorText = this.poManager.getloginpage();
-  await errorText.loginFailed();
+  await errorText.loginFailed("Epic sadface: Sorry, this user has been locked out.");
   
 });
