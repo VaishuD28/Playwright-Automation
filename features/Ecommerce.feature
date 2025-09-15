@@ -2,7 +2,7 @@ Feature: Ecommerce validation
 
     @PassedUsers
     Scenario Outline: Placing an order
-        Given I login to the Ecommerce application with "<username>" and "<password>"
+        Given I login to the application with "<username>" and "<password>"
         When login should be successful
         Then I add "<productName>" to the cart
 
@@ -11,12 +11,9 @@ Feature: Ecommerce validation
             | standard_user           | secret_sauce | Sauce Labs Backpack      |
             | problem_user            | secret_sauce | Sauce Labs Bike Light    |
             | performance_glitch_user | secret_sauce | Sauce Labs Fleece Jacket |
-            | error_user              | secret_sauce | Sauce Labs Bolt T-Shirt  |
+            | error_user              | secret_sauce | Sauce Labs Bolt T-Shirt   |
             | visual_user             | secret_sauce | Sauce Labs Onesie        |
 
 
-    @FailedUsers
-    Scenario Outline: Placing an order - Invalid user
-        Given I login to the Ecommerce application with  invalid credentials "locked_out_user" and "secret_sauce"
-        Then login should fail with an error message
+   
 

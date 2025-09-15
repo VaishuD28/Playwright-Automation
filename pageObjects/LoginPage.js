@@ -35,6 +35,11 @@ class LoginPage {
         console.log(await this.errorMessage.textContent());
     }
 
+    async getErrorMessage()
+    {
+        return this.errorMessage.textContent();
+    }
+
 }
 
 

@@ -24,7 +24,7 @@ class DashboardPage {
             }
         }
         // handling expect when product is not found.
-        throw new Error(`Product "${productName}" not found on Dashboard`);
+       throw new Error(`Product "${productName}" not found on Dashboard`);
     }
 
     async goToCart() {

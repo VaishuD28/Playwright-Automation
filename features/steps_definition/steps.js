@@ -28,6 +28,29 @@ Then('I add {string} to the cart', async function (productName) {
 });
 
 
+
+////////////////////////Invalid credentials///////////////////////////////////
+
+Given('I login to the application with {string} and {string}', { timeout: 200 * 1000 },
+  async function (username, password) {
+    // Write code here that turns the phrase above into concrete actions
+    const loginPage = this.poManager.getLoginPage();
+    await loginPage.goto();
+    await loginPage.login(username, password);
+
+  });
+
+
+  Then('I should see an message {string}', {timeout: 200 * 1000} , async function (errorMessage) {
+  // Write code here that turns the phrase above into concrete actions
+  const loginPage = this.poManager.getLoginPage();
+  const errorText = await loginPage.getErrorMessage();
+  expect(errorText).toContain(errorMessage);
+ 
+  
+});
+
+
 ////////////////////////////Failed test ////////////////////////////////
 
 Given('I login to the Ecommerce application with invalid credentials {string} and {string}',{ timeout: 200 * 1000 },
@@ -41,7 +64,10 @@ Given('I login to the Ecommerce application with invalid credentials {string} an
 
 Then('login should fail with an error message',{ timeout: 200 * 1000 }, async function () {
   // Write code here that turns the phrase above into concrete actions
-  const errorText = this.poManager.getloginpage();
+  const errorText = this.poManager.getLoginPage();
   await errorText.loginFailed("Epic sadface: Sorry, this user has been locked out.");
   
 });
+
+
+
