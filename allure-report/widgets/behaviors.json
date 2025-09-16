@@ -1,0 +1,1 @@
+{"total":2,"items":[{"uid":"30a4946b24f1813769a07c3dc3f8453e","name":"Invalid credentials","statistic":{"failed":0,"broken":0,"skipped":0,"passed":11,"unknown":0,"total":11}},{"uid":"f100aa192a28e7ec1b77def76b05a324","name":"Ecommerce validation","statistic":{"failed":0,"broken":0,"skipped":0,"passed":10,"unknown":0,"total":10}}]}

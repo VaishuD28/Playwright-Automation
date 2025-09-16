@@ -4,7 +4,7 @@ Feature: Invalid credentials
 
     Scenario Outline: Login fails with invalid credentials
         Given I login to the Ecommerce application with "<username>" and "<password>"
-        Then I should see an message "<error>"
+        Then I should see a message "<error>"
 
         Examples:
             | username     | password      | error                                                                     |
@@ -13,8 +13,14 @@ Feature: Invalid credentials
             | visual_uuser | secret_sauce  | Epic sadface: Username and password do not match any user in this service |
             | visual_user  | secret_saucer | Epic sadface: Username and password do not match any user in this service |
 
- @FailedUsers
+    @FailedUsers
     Scenario Outline: Placing an order - Invalid user
         Given I login to the Ecommerce application with invalid credentials "locked_out_user" and "secret_sauce"
         Then login should fail with an error message
+
+    @ProductNotFound
+    Scenario: While placing order, product is not found in dashboard
+        Given I logged in with "standard_user" and "secret_sauce"
+        When The "Addidas Samba" is not found in the cart
+        Then It should throw error: Product is not found
 

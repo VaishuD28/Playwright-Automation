@@ -1,6 +1,6 @@
 const { Given, Then, When } = require('@cucumber/cucumber');
 const { test, expect } = require('@playwright/test');
-const  POManager  = require('../../pageObjects/POManager');
+const POManager = require('../../pageObjects/POManager');
 
 
 Given('I login to the Ecommerce application with {string} and {string}', { timeout: 200 * 1000 },
@@ -41,33 +41,59 @@ Given('I login to the application with {string} and {string}', { timeout: 200 * 
   });
 
 
-  Then('I should see an message {string}', {timeout: 200 * 1000} , async function (errorMessage) {
+Then('I should see a message {string}', { timeout: 200 * 1000 }, async function (errorMessage) {
   // Write code here that turns the phrase above into concrete actions
   const loginPage = this.poManager.getLoginPage();
   const errorText = await loginPage.getErrorMessage();
   expect(errorText).toContain(errorMessage);
- 
-  
+
+
 });
 
 
 ////////////////////////////Failed test ////////////////////////////////
 
-Given('I login to the Ecommerce application with invalid credentials {string} and {string}',{ timeout: 200 * 1000 },
-   async function (username, password) {
-  // Write code here that turns the phrase above into concrete actions
-   const loginPage = this.poManager.getLoginPage();
+Given('I login to the Ecommerce application with invalid credentials {string} and {string}', { timeout: 200 * 1000 },
+  async function (username, password) {
+    // Write code here that turns the phrase above into concrete actions
+    const loginPage = this.poManager.getLoginPage();
     await loginPage.goto();
     await loginPage.login(username, password);
-});
+  });
 
-
-Then('login should fail with an error message',{ timeout: 200 * 1000 }, async function () {
+Then('login should fail with an error message', { timeout: 200 * 1000 }, async function () {
   // Write code here that turns the phrase above into concrete actions
   const errorText = this.poManager.getLoginPage();
-  await errorText.loginFailed("Epic sadface: Sorry, this user has been locked out.");
+  await errorText.loginFailed("Epic sadface: Sorry, this user has been locked out.")
+});
+
+
+////////////////Product Not Found ///////////////////////
+
+Given('I logged in with {string} and {string}',{ timeout: 200 * 1000 }, async function (username, password) {
+  
+  const loginPage = this.poManager.getLoginPage();
+  await loginPage.goto();
+  await loginPage.login(username, password);
+});
+
+
+When('The {string} is not found in the cart', async function (productName) {
+  const dashboardPage = this.poManager.getDashboardPage();
+  try {
+    await dashboardPage.addProductToCart(productName);
+  } catch (error) {
+    this.errorMessage = error.message;
+  }
+});
+
+Then('It should throw error: Product is not found', async function () {
+  console.log("Error: ", this.errorMessage);
+  const error =  expect( this.errorMessage).toContain('not found on Dashboard');
   
 });
+
+
 
 
 
