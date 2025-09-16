@@ -1,5 +1,6 @@
 const LoginPage = require('./LoginPage');
 const DashboardPage = require('./DashboardPage');
+const CartPage = require('./CartPage');
 
 class POManager
 {
@@ -8,6 +9,7 @@ class POManager
         this.page =page;
         this.loginPage = new LoginPage(this.page);
         this.dashboardPage = new DashboardPage(this.page);
+        this.cartPage = null;
     }
 
     // getLoginPage()
@@ -33,6 +35,14 @@ class POManager
         }
         return this.dashboardPage;
     }
+
+    getCartPage() {
+    if (!this.cartPage) {
+      this.cartPage = new CartPage(this.page);
+    }
+    return this.cartPage;
+  }
+
 }
 
 module.exports = POManager;

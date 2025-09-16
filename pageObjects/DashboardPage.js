@@ -13,19 +13,28 @@ class DashboardPage {
         return names;
     }
 
-    async addProductToCart(productName) {
+    async addProductToCart(...productNames)  //...productNames 0 this is array of productname called as rest parameter
+     {
         const count = await this.productTitles.count();
-        for (let i = 0; i < count; ++i) {
-          const name = (await this.productTitles.nth(i).innerText()).trim();
-            if (name === productName) {
-                //add to cart
-                await this.products.nth(i).getByRole("button", { name : "Add to cart" }).click();
-                return;
+
+        for (const productName of productNames) {
+            let found = false;
+
+            for (let i = 0; i < count; ++i) {
+                const name = (await this.productTitles.nth(i).innerText()).trim();
+                if (name === productName) {
+                    await this.products.nth(i).getByRole("button", { name: "Add to cart" }).click();
+                    found = true;
+                    break; // break inner loop once found
+                }
+            }
+
+            if (!found) {
+                throw new Error(`Product "${productName}" not found on Dashboard`);
             }
         }
-        // handling expect when product is not found.
-       throw new Error(`Product "${productName}" not found on Dashboard`);
     }
+
 
     async goToCart() {
         await this.cart.click();

@@ -3,20 +3,20 @@ const { test, expect } = require('@playwright/test');
 const POManager = require('../../pageObjects/POManager');
 
 
-Given('I login to the Ecommerce application with {string} and {string}', { timeout: 200 * 1000 },
-  async function (username, password) {
-    // Write code here that turns the phrase above into concrete actions
-    const loginPage = this.poManager.getLoginPage();
-    await loginPage.goto();
-    await loginPage.login(username, password);
+// Given('I login to the Ecommerce application with {string} and {string}', { timeout: 200 * 1000 },
+//   async function (username, password) {
+//     // Write code here that turns the phrase above into concrete actions
+//     const loginPage = this.poManager.getLoginPage();
+//     await loginPage.goto();
+//     await loginPage.login(username, password);
 
-  });
+//   });
 
-When('login should be successful', async function () {
-  // Write code here that turns the phrase above into concrete actions
-  const welcomeText = this.poManager.getLoginPage();
-  await welcomeText.verifyLogin();
-});
+// When('login should be successful', async function () {
+//   // Write code here that turns the phrase above into concrete actions
+//   const welcomeText = this.poManager.getLoginPage();
+//   await welcomeText.verifyLogin();
+// });
 
 
 Then('I add {string} to the cart', async function (productName) {
@@ -31,7 +31,7 @@ Then('I add {string} to the cart', async function (productName) {
 
 ////////////////////////Invalid credentials///////////////////////////////////
 
-Given('I login to the application with {string} and {string}', { timeout: 200 * 1000 },
+Given('I login to the Ecommerce application with {string} and {string}', { timeout: 200 * 1000 },
   async function (username, password) {
     // Write code here that turns the phrase above into concrete actions
     const loginPage = this.poManager.getLoginPage();
@@ -51,7 +51,7 @@ Then('I should see a message {string}', { timeout: 200 * 1000 }, async function 
 });
 
 
-////////////////////////////Failed test ////////////////////////////////
+////////////////////////////@FailedUsers ////////////////////////////////
 
 Given('I login to the Ecommerce application with invalid credentials {string} and {string}', { timeout: 200 * 1000 },
   async function (username, password) {
@@ -68,10 +68,10 @@ Then('login should fail with an error message', { timeout: 200 * 1000 }, async f
 });
 
 
-////////////////Product Not Found ///////////////////////
+////////////////  @ProductNotFound ///////////////////////
 
-Given('I logged in with {string} and {string}',{ timeout: 200 * 1000 }, async function (username, password) {
-  
+Given('I logged in with {string} and {string}', { timeout: 200 * 1000 }, async function (username, password) {
+
   const loginPage = this.poManager.getLoginPage();
   await loginPage.goto();
   await loginPage.login(username, password);
@@ -89,10 +89,41 @@ When('The {string} is not found in the cart', async function (productName) {
 
 Then('It should throw error: Product is not found', async function () {
   console.log("Error: ", this.errorMessage);
-  const error =  expect( this.errorMessage).toContain('not found on Dashboard');
-  
+  await expect(this.errorMessage).toContain('not found on Dashboard');
+
 });
 
+/////////////////////Cart page ---   @PassedUsers/////////////////////////////
+Given('I login to the application with {string} and {string}',{ timeout: 200 * 1000 },
+   async function (username, password) {
+ // this.poManager = new POManager(this.page);
+  const loginPage = this.poManager.getLoginPage();
+  this.dashboardPage = this.poManager.getDashboardPage();
+  this.cartPage = this.poManager.getCartPage();
+
+  await loginPage.goto();
+  await loginPage.login(username, password);
+});
+
+When('login should be successful', async function () {
+  // Write code here that turns the phrase above into concrete actions
+  const welcomeText = this.poManager.getLoginPage();
+  await welcomeText.verifyLogin();
+});
+
+Then('I add {string} and {string} to the cart', async function (productName1, productName2) {
+  await this.dashboardPage.addProductToCart(productName1,productName2);
+
+});
+
+When('Verify products {string} and {string} should be added to cart', async function (productName1, productName2) {
+  await this.dashboardPage.goToCart();
+  await this.cartPage.cartValidation([productName1, productName2]);
+});
+
+Then('Remove {string} from the cart', async function (productName2) {
+  await this.cartPage.removeProduct(productName2);
+});
 
 
 
