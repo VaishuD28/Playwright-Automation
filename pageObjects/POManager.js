@@ -45,6 +45,11 @@ class POManager
     return this.cartPage;
   }
 
+  getCheckOutPage()
+  {
+    return this.checkoutpage;
+  }
+
 }
 
 module.exports = POManager;

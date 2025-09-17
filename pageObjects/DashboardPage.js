@@ -15,6 +15,7 @@ class DashboardPage {
 
     async addProductToCart(...productNames)  //...productNames 0 this is array of productname called as rest parameter
      {
+        this.page.on("dialog", dialog=> dialog.accept());
         const count = await this.productTitles.count();
 
         for (const productName of productNames) {

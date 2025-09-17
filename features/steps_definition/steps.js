@@ -94,16 +94,13 @@ Then('It should throw error: Product is not found', async function () {
 });
 
 /////////////////////Cart page ---   @PassedUsers/////////////////////////////
-Given('I login to the application with {string} and {string}',{ timeout: 200 * 1000 },
-   async function (username, password) {
- // this.poManager = new POManager(this.page);
-  const loginPage = this.poManager.getLoginPage();
-  this.dashboardPage = this.poManager.getDashboardPage();
-  this.cartPage = this.poManager.getCartPage();
-
-  await loginPage.goto();
-  await loginPage.login(username, password);
-});
+Given('I login to the application with {string} and {string}', { timeout: 200 * 1000 },
+  async function (username, password) {
+    // this.poManager = new POManager(this.page);
+    const loginPage = this.poManager.getLoginPage();
+    await loginPage.goto();
+    await loginPage.login(username, password);
+  });
 
 When('login should be successful', async function () {
   // Write code here that turns the phrase above into concrete actions
@@ -112,18 +109,28 @@ When('login should be successful', async function () {
 });
 
 Then('I add {string} and {string} to the cart', async function (productName1, productName2) {
-  await this.dashboardPage.addProductToCart(productName1,productName2);
+  this.dashboardPage = this.poManager.getDashboardPage();
+  await this.dashboardPage.addProductToCart(productName1, productName2);
 
 });
 
 When('Verify products {string} and {string} should be added to cart', async function (productName1, productName2) {
+  this.cartPage = this.poManager.getCartPage();
   await this.dashboardPage.goToCart();
   await this.cartPage.cartValidation([productName1, productName2]);
 });
 
 Then('Remove {string} from the cart', async function (productName2) {
+
   await this.cartPage.removeProduct(productName2);
   await this.cartPage.checkOutPage();
+});
+
+When('I fill details {string}, {string} and {string} and continue', async function (firstname, lastname, pin) {
+this.checkOutPage = this.poManager.getCheckOutPage();
+await this.checkOutPage.fillDetails(firstname, lastname, pin);
+await this.checkOutPage.navigateToReviewPage();
+
 });
 
 
