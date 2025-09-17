@@ -1,6 +1,7 @@
 const { Given, Then, When } = require('@cucumber/cucumber');
 const { test, expect } = require('@playwright/test');
 const POManager = require('../../pageObjects/POManager');
+const { userDetails } = require('../../testData');
 
 
 // Given('I login to the Ecommerce application with {string} and {string}', { timeout: 200 * 1000 },
@@ -106,6 +107,8 @@ When('login should be successful', async function () {
   // Write code here that turns the phrase above into concrete actions
   const welcomeText = this.poManager.getLoginPage();
   await welcomeText.verifyLogin();
+  await this.page.waitForTimeout(2000);
+  
 });
 
 Then('I add {string} and {string} to the cart', async function (productName1, productName2) {
@@ -127,9 +130,11 @@ Then('Remove {string} from the cart', async function (productName2) {
 });
 
 When('I fill details {string}, {string} and {string} and continue', async function (firstname, lastname, pin) {
-this.checkOutPage = this.poManager.getCheckOutPage();
-await this.checkOutPage.fillDetails(firstname, lastname, pin);
-await this.checkOutPage.navigateToReviewPage();
+  this.checkOutPage = this.poManager.getCheckOutPage();
+  await this.checkOutPage.fillDetails(userDetails.firstname, userDetails.lastname, userDetails.pincode);
+  await this.page.waitForTimeout(2000);
+  await this.checkOutPage.navigateToReviewPage();
+  await this.page.waitForTimeout(2000); // fixed wait, then continues automatically 
 
 });
 
