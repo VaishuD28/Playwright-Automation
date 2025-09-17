@@ -1,6 +1,7 @@
 const LoginPage = require('./LoginPage');
 const DashboardPage = require('./DashboardPage');
 const CartPage = require('./CartPage');
+const CheckoutPage = require('./CheckoutPage');
 
 class POManager
 {
@@ -10,6 +11,7 @@ class POManager
         this.loginPage = new LoginPage(this.page);
         this.dashboardPage = new DashboardPage(this.page);
         this.cartPage = null;
+        this.checkoutpage = new CheckoutPage(this.page);
     }
 
     // getLoginPage()

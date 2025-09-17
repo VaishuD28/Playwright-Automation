@@ -5,6 +5,7 @@ class CartPage
     {
         this.page = page;
         this.cartProducts = page.locator(".cart_item");
+        this.checkOutBtn = page.getByRole("button", {name: "Checkout"});
     }
 
    async cartValidation(expectedProducts) {
@@ -16,6 +17,7 @@ class CartPage
       await expect(productLocator).toBeVisible();
     }
   }
+
   async removeProduct(productName) {
     const removeButton = this.page.locator(
       `button[data-test="remove-${productName.toLowerCase().replaceAll(" ", "-")}"]`
@@ -25,6 +27,11 @@ class CartPage
     await expect(
       this.page.locator(`.inventory_item_name:has-text("${productName}")`)
     ).toHaveCount(0);
+  }
+
+  async checkOutPage()
+  {
+    await this.checkOutBtn.click();
   }
 }
 

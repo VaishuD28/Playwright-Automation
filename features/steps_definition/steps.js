@@ -123,6 +123,7 @@ When('Verify products {string} and {string} should be added to cart', async func
 
 Then('Remove {string} from the cart', async function (productName2) {
   await this.cartPage.removeProduct(productName2);
+  await this.cartPage.checkOutPage();
 });
 
 
