@@ -2,6 +2,7 @@ const LoginPage = require('./LoginPage');
 const DashboardPage = require('./DashboardPage');
 const CartPage = require('./CartPage');
 const CheckoutPage = require('./CheckoutPage');
+const ReviewPage = require('./ReviewPage');
 
 class POManager
 {
@@ -12,6 +13,7 @@ class POManager
         this.dashboardPage = new DashboardPage(this.page);
         this.cartPage = null;
         this.checkoutpage = new CheckoutPage(this.page);
+        this.reviewPage = new ReviewPage(this.page);
     }
 
     // getLoginPage()
@@ -48,6 +50,11 @@ class POManager
   getCheckOutPage()
   {
     return this.checkoutpage;
+  }
+
+  getReviewPageSummary()
+  {
+    return this.reviewPage;
   }
 
 }

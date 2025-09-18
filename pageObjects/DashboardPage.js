@@ -3,7 +3,7 @@ class DashboardPage {
         this.page = page;
         this.products = page.locator(".inventory_item");
         this.productTitles = this.page.locator(".inventory_item_name");
-        this.cart = page.locator("[data-test='shopping-cart-link']")
+        this.cart = page.locator("[data-test='shopping-cart-link']");
 
     }
 

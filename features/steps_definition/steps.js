@@ -108,7 +108,7 @@ When('login should be successful', async function () {
   const welcomeText = this.poManager.getLoginPage();
   await welcomeText.verifyLogin();
   await this.page.waitForTimeout(2000);
-  
+
 });
 
 Then('I add {string} and {string} to the cart', async function (productName1, productName2) {
@@ -132,9 +132,17 @@ Then('Remove {string} from the cart', async function (productName2) {
 When('I fill details {string}, {string} and {string} and continue', async function (firstname, lastname, pin) {
   this.checkOutPage = this.poManager.getCheckOutPage();
   await this.checkOutPage.fillDetails(userDetails.firstname, userDetails.lastname, userDetails.pincode);
-  await this.page.waitForTimeout(2000);
   await this.checkOutPage.navigateToReviewPage();
   await this.page.waitForTimeout(2000); // fixed wait, then continues automatically 
+});
+
+Then('Verify total price, get payment id and validate {string}', async function (expectedProducts) {
+  const reviewSummary = this.poManager.getReviewPageSummary();
+  await reviewSummary.validateProduct(expectedProducts);
+  await reviewSummary.getPaymentDetails();
+  await reviewSummary.validatePriceCalculation();
+  await this.page.waitForTimeout(2000);  // wait 2 sec
+  await reviewSummary.navigatetoCompletePage();
 
 });
 

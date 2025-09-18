@@ -8,6 +8,7 @@ Feature: Ecommerce validation
         When Verify products "<productName1>" and "<productName2>" should be added to cart
         Then Remove "<productName2>" from the cart
         When I fill details "vaishnavi", "dharmapuri" and "560100" and continue
+        Then Verify total price, get payment id and validate "<productName1>"
 
 
         Examples:
