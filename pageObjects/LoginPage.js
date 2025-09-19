@@ -24,7 +24,11 @@ class LoginPage {
         //using assertion to verify login instead of printing on console
         // const text = await this.welcomeText.textContent();
         // console.log(text);
-        await expect(this.welcomeText).toHaveText("Swag Labs");
+        //expect(text).toBe("Swag Labs");
+
+        //tohaveTitle() works only on page, so no need to use locator here
+        await expect(this.page).toHaveTitle("Swag Labs");
+
     }
 
     async loginFailed(expectedMessage) {
@@ -35,8 +39,7 @@ class LoginPage {
         console.log(await this.errorMessage.textContent());
     }
 
-    async getErrorMessage()
-    {
+    async getErrorMessage() {
         return this.errorMessage.textContent();
     }
 

@@ -141,6 +141,7 @@ Then('Verify total price, get payment id and validate {string}', async function 
   await reviewSummary.validateProduct(expectedProducts);
   await reviewSummary.getPaymentDetails();
   await reviewSummary.validatePriceCalculation();
+  
   await this.page.waitForTimeout(2000);  // wait 2 sec
   await reviewSummary.navigatetoCompletePage();
 
