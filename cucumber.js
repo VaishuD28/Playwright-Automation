@@ -1,19 +1,16 @@
+// cucumber.js (in project root)
 module.exports = {
   default: {
-    require: ["features/steps_definition/*.js", "features/support/*.js"],
+    require: [
+      'features/steps_definition/**/*.js',
+      'features/support/hooks.js'
+    ],
     format: [
-      "progress",
-      "allure-cucumberjs/reporter"
+      'progress',
+      'allure-cucumberjs/reporter'
     ],
-    paths: [
-      "features/**/*.feature"
-    ],
-    format: ["progress"],
     formatOptions: {
-      "allure-cucumberjs/reporter": {
-        resultsDir: "allure-results"
-      }
-    },
-    publishQuiet: true
+      resultsDir: 'allure-results'
+    }
   }
 };
